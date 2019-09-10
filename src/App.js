@@ -9,7 +9,7 @@ function App() {
     <>
       <Container>
         <Row>
-          <Col><h1>Memories</h1></Col>
+          {/*<Col><h1>Memories</h1></Col>*/}
         </Row>
         <Row>
           <Col>
