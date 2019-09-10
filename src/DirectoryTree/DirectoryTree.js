@@ -1,13 +1,12 @@
 import React from 'react'
 import Directory from "../Directory/Directory";
+import TODO_store from "../store";
 
 export default function DirectoryTree () {
 
-  const TODO_list = [{ id: 1, name: 'React' }, { 'id': 2, name: 'Angular' }, { id: 3, name: 'Vue' }]
-
   return (
     <>
-      {TODO_list.map(x => <Directory key={x.id} name={x.name}/>)}
+      {TODO_store.map(x => <Directory key={x.id} directory={x} />)}
       <button>Add new +</button>
     </>
   )

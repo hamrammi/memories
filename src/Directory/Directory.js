@@ -1,26 +1,19 @@
 import React, { useState } from 'react'
 
-function TODO_getFromStore () {
-  return [
-    { id: 1, name: 'Getting Started' },
-    { id: 2, name: 'Router' },
-    { id: 3, name: 'Redux' },
-  ]
-}
-
-export default function Directory ({ name }) {
-  let [subDirectories, setSubDirectories] = useState([])
+export default function Directory ({ directory: { id, name, subDirectories } }) {
+  console.log(id, name, subDirectories);
+  let [subDirs, setSubDirs] = useState(subDirectories)
 
   function onClick () {
-    setSubDirectories(TODO_getFromStore())
+    setSubDirs({})
   }
 
   return (
     <>
       <div onClick={onClick} className="my-1 py-2 px-4 border bg-light">{ name }</div>
       <div className="ml-4">
-        {subDirectories.map((x) => {
-          return <Directory key={x.id} name={x.name}/>
+        {subDirs.map((x) => {
+          return <Directory key={x.id} directory={x}/>
         })}
       </div>
     </>
