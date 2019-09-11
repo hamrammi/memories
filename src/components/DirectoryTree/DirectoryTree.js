@@ -8,14 +8,14 @@ function DirectoryTree ({ directories }) {
       {directories.map(x =>
         <Directory key={x.id} directory={x} />)
       }
-      <button>Add new +</button>
+      <button className="mt-2 btn btn-light"><i className="mr-2 text-info fas fa-plus"></i> Add new</button>
     </>
   )
 }
 
 function mapStateToProps (state) {
   return {
-    directories: state.directories
+    directories: state.directories.tree
   }
 }
 

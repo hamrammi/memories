@@ -1,23 +1,29 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import DirectoryTree from "./DirectoryTree/DirectoryTree";
+import DirectoryContent from "./DirectoryContent/DirectoryContent";
 
 function App() {
   return (
     <>
-      <Container>
-        <Row>
-          {/*<Col><h1>Memories</h1></Col>*/}
-        </Row>
-        <Row>
-          <Col>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 text-center">
+            <div className="my-4">
+              <input className="form-control form-control-lg"
+                     autoComplete="off"
+                     type="text" name="search" id="search" placeholder="Search "/>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-4">
             <DirectoryTree/>
-          </Col>
-          <Col></Col>
-        </Row>
-      </Container>
+          </div>
+          <div className="col-8">
+            <DirectoryContent/>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,7 +1,6 @@
-import { combineReducers } from "redux";
-import { TOGGLE_SUBDIRS } from "./actions";
+import { TOGGLE_SUBDIRECTORIES } from "../actions/actions";
 
-const TODO_directories = [
+const tree = [
   {
     id: 1,
     name: 'React',
@@ -42,25 +41,16 @@ const TODO_directories = [
   }
 ]
 
-function directories (state = TODO_directories, action) {
-  return state
-}
-
-function expandedDirectories (state = [], action) {
+function directories (state = { tree, activeDirectoryId: 0 }, action) {
   switch (action.type) {
-    case TOGGLE_SUBDIRS:
-      const directoryId = action.payload.directoryId
-      const index = state.indexOf(directoryId)
-      if (index !== -1) {
-        return state.slice(0, index).concat(state.slice(index + 1))
-      }
-      return state.concat(directoryId)
+    case TOGGLE_SUBDIRECTORIES:
+      return Object.assign({}, state, {
+        activeDirectoryId: action.payload.directoryId
+      })
+
     default:
       return state
   }
 }
 
-export default combineReducers({
-  expandedDirectories,
-  directories
-})
+export default directories
