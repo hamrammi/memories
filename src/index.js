@@ -3,13 +3,26 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import store from './store/store'
+import { ApolloProvider } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+
+const apolloClient = new ApolloClient({
+  link: createHttpLink({
+    uri: 'http://localhost:4000'
+  }),
+  cache: new InMemoryCache()
+})
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ApolloProvider client={apolloClient}>
+    <ReduxProvider store={store}>
+      <App />
+    </ReduxProvider>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
