@@ -1,0 +1,17 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+}
+
+type Node {
+  id: ID!
+  level: Int!
+  name: String!
+  parentId: ID
+}
+
+type Query {
+  info: String!
+  nodes: [Node!]
+}
