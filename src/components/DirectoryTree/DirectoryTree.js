@@ -21,15 +21,16 @@ function DirectoryTree () {
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-
+          const tree = makeTree(data.nodes)
           return (
             <div>
-              {makeTree(data.nodes)/*.map(x => <Directory key={x.id} directory={x} />)*/}
+              {Object.keys(tree)
+                .map(nodeId => <Directory key={nodeId} directory={tree[nodeId]} />)}
             </div>
           )
         }}
       </Query>
-      <button className="mt-2 btn btn-light"><i className="mr-2 text-info fas fa-plus"></i>Add new</button>
+      <button className="mt-2 btn btn-light"><i className="mr-2 text-info fas fa-plus"/>Add new</button>
     </>
   )
 }
@@ -37,23 +38,25 @@ function DirectoryTree () {
 export default DirectoryTree
 
 function makeTree (nodes) {
-  const findNodeIdsByParentId = id =>
-    nodes.filter(x => x.parentId === id).map(x => x.id)
+  const findNodesByParentNodeId = parentNodeId =>
+    nodes.filter(node => node.parentId === parentNodeId)//.map(x => x.id)
 
-  function findSubDirs (parentNodeId, tree) {
-    let nodeIds = findNodeIdsByParentId(parentNodeId)
-    tree[parentNodeId] = {}
-    nodeIds.forEach(nodeId => {
-      tree[parentNodeId][nodeId] = {}
-      findSubDirs(nodeId, tree[parentNodeId])
+  function addSubNodes (parentNode, tree) {
+    let nodes = findNodesByParentNodeId(parentNode.id)
+    tree[parentNode.id] = Object.assign({}, parentNode, {
+      __subNodes: {}
+    })
+    nodes.forEach(node => {
+      addSubNodes(node, tree[parentNode.id]['__subNodes'])
     })
     return tree
   }
 
-  findNodeIdsByParentId(null).forEach(id => {
-    const tree = findSubDirs(id, {})
-    console.log('Tree', id, tree)
+  let tree = {}
+
+  findNodesByParentNodeId(null).forEach(node => {
+    tree = Object.assign({}, tree, addSubNodes(node, {}))
   })
 
-  // console.log(nodes);
+  return tree
 }
