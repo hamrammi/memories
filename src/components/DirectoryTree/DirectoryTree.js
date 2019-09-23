@@ -14,38 +14,6 @@ const GQL_nodes = gql`
   }
 `
 
-function makeTree (nodes) {
-  const findByParentId = id => nodes.filter(x => x.parentId === id).map(x => x.id)
-
-  const preTree = nodes.reduce((xs, x) => {
-    if (x.parentId !== null) {
-      xs['leafs'][x.parentId] = findByParentId(x.parentId)
-    } else {
-      xs['trunk'] = xs['trunk'].concat(x.id)
-    }
-    return xs
-  }, { 'trunk': [], 'leafs': {} })
-
-  function findSubDirs (dirId, tree) {
-    if (dirId in preTree['leafs']) {
-      tree[dirId] = {}
-      preTree['leafs'][dirId].forEach(subDirId => {
-        tree[dirId][subDirId] = {}
-        findSubDirs(subDirId, tree[dirId])
-      })
-    }
-    return tree
-  }
-
-  preTree['trunk'].forEach(id => {
-    const tree = findSubDirs(id, {})
-    console.log('Tree', id, tree)
-  })
-
-  // console.log(nodes);
-  // console.log(preTree)
-}
-
 function DirectoryTree () {
   return (
     <>
@@ -56,7 +24,7 @@ function DirectoryTree () {
 
           return (
             <div>
-              {makeTree(data.nodes).map(x => <Directory key={x.id} directory={x} />)}
+              {makeTree(data.nodes)/*.map(x => <Directory key={x.id} directory={x} />)*/}
             </div>
           )
         }}
@@ -67,3 +35,25 @@ function DirectoryTree () {
 }
 
 export default DirectoryTree
+
+function makeTree (nodes) {
+  const findNodeIdsByParentId = id =>
+    nodes.filter(x => x.parentId === id).map(x => x.id)
+
+  function findSubDirs (parentNodeId, tree) {
+    let nodeIds = findNodeIdsByParentId(parentNodeId)
+    tree[parentNodeId] = {}
+    nodeIds.forEach(nodeId => {
+      tree[parentNodeId][nodeId] = {}
+      findSubDirs(nodeId, tree[parentNodeId])
+    })
+    return tree
+  }
+
+  findNodeIdsByParentId(null).forEach(id => {
+    const tree = findSubDirs(id, {})
+    console.log('Tree', id, tree)
+  })
+
+  // console.log(nodes);
+}
