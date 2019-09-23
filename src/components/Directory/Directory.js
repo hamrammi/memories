@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { loadDirectoryContent, toggleSubdirectories } from "../../store/actions/actions";
 
 function Directory ({ directory, expandedDirectories, toggle, load }) {
-  console.log(directory);
   const isExpanded = expandedDirectories.indexOf(directory.id) !== -1
   const subNodes = directory.__subNodes
 
@@ -15,7 +14,7 @@ function Directory ({ directory, expandedDirectories, toggle, load }) {
   return (
     <>
       <div onClick={onClick} className="my-1 py-2 px-2 bg-light">
-        <i className={'mr-2 text-info fas ' + (isExpanded ? 'fa-folder-open' : 'fa-folder')}></i>{ directory.name }
+        <i className={'mr-2 text-info fas ' + (isExpanded ? 'fa-folder-open' : 'fa-folder')}/>{ directory.name }
       </div>
       <div className="ml-4">
         {isExpanded && Object.keys(subNodes).map((nodeId) => {

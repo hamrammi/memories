@@ -1,18 +1,40 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
-function DirectoryContent ({ items }) {
+const GQL_nodeContent = gql`
+  query ($nodeId: ID!) {
+    nodeContent(nodeId: $nodeId) {
+      id
+      title
+      description
+    }
+  }
+`
+
+function DirectoryContent ({ activeDirectoryId }) {
   return (
     <>
-      {items.length === 0 && <div><i>Choose something on the left</i></div>}
-      {items.map((x) => {
-        return (
-          <div className="border-bottom py-2" key={x.id}>
-            <div className="text-info">{ x.title }</div>
-            <div><small>{ x.description }</small></div>
-          </div>
-        )
-      })}
+      <Query query={GQL_nodeContent} variables={{ nodeId: activeDirectoryId }}>
+        {({ loading, error, data }) => {
+          if (loading) return <div>Fetching</div>
+          if (error) return <div>Error</div>
+          const items = data['nodeContent']
+
+          if (items.length === 0) return <div><i>There're no items yet</i></div>
+          return (
+            items.map((x) => {
+              return (
+                <div className="border-bottom py-2" key={x.id}>
+                  <div className="text-info">{ x.title }</div>
+                  <div><small>{ x.description }</small></div>
+                </div>
+              )
+            })
+          )
+        }}
+      </Query>
     </>
   )
 }
@@ -21,7 +43,7 @@ function DirectoryContent ({ items }) {
 
 function mapStateToProps (state) {
   return {
-    items: state.directoryContent[state.directories.activeDirectoryId] || []
+    activeDirectoryId: state.directories.activeDirectoryId
   }
 }
 

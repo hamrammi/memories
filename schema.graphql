@@ -11,7 +11,14 @@ type Node {
   parentId: ID
 }
 
+type NodeContent {
+  description: String
+  id: ID!
+  title: String!
+}
+
 type Query {
   info: String!
+  nodeContent(nodeId: ID!): [NodeContent!]
   nodes: [Node!]
 }
