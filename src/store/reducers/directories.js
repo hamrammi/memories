@@ -1,12 +1,26 @@
-import { TOGGLE_SUBDIRECTORIES } from "../actions/actions";
+import { LOAD_DIRECTORY_CONTENT, TOGGLE_SUBDIRECTORIES } from "../actions/actions";
 
-function directories (state = { activeDirectoryId: 0 }, action) {
+const initialState = {
+  activeId: 0,
+  expandedIds: []
+}
+
+function directories (state = initialState, action) {
   switch (action.type) {
-    case TOGGLE_SUBDIRECTORIES:
+    case LOAD_DIRECTORY_CONTENT:
       return Object.assign({}, state, {
-        activeDirectoryId: action.payload.directoryId
+        activeId: action.payload.directoryId
       })
-
+    case TOGGLE_SUBDIRECTORIES:
+      const directoryId = action.payload.directoryId
+      const index = state.expandedIds.indexOf(directoryId)
+      let expandedIds
+      if (index !== -1) {
+        expandedIds = state.expandedIds.slice(0, index).concat(state.expandedIds.slice(index + 1))
+      } else {
+        expandedIds = state.expandedIds.concat(directoryId)
+      }
+      return Object.assign({}, state, { expandedIds: expandedIds })
     default:
       return state
   }

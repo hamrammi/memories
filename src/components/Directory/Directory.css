@@ -1,0 +1,14 @@
+.Directory__caret-container {
+  width: 16px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.Directory__caret {
+  font-size: 1.4rem;
+}
+
+.Directory__name {
+  cursor: default;
+}
