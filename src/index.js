@@ -9,6 +9,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { BrowserRouter } from 'react-router-dom'
 
 const apolloClient = new ApolloClient({
   link: createHttpLink({
@@ -18,11 +19,13 @@ const apolloClient = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={apolloClient}>
-    <ReduxProvider store={store}>
-      <App />
-    </ReduxProvider>
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={apolloClient}>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
