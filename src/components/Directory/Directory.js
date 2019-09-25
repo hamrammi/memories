@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import { loadDirectoryContent, toggleSubdirectories } from "../../store/actions/actions";
 import './Directory.css'
+import DirectoryContext from "../../contexts/DIrectoryContext";
 
 function Directory ({ directory, expandedDirectories, toggle, load }) {
+  const theme = useContext(DirectoryContext)
+
   const isExpanded = expandedDirectories.indexOf(directory.id) !== -1
   const subNodes = directory.__subNodes
   return (
@@ -11,11 +14,11 @@ function Directory ({ directory, expandedDirectories, toggle, load }) {
       <div className="d-flex">
         <div onClick={() => toggle(directory.id)} className={'pr-2 d-flex align-items-center'}>
           <span className={'Directory__caret-container mb-0 ' + (Object.keys(subNodes).length === 0 ? 'invisible' : '')}>
-            <i className={'Directory__caret text-info fas ' + (isExpanded ? 'fa-caret-down' : 'fa-caret-right')}/>
+            <i className={`Directory__caret text-${theme} fas ` + (isExpanded ? 'fa-caret-down' : 'fa-caret-right')}/>
           </span>
         </div>
         <div onClick={() => load(directory.id)} className="py-2 pr-2 Directory__name">
-          <i className={'mr-2 text-info fas fa-folder'}/>
+          <i className={`mr-2 fas fa-folder text-${theme}`}/>
           { directory.name }
         </div>
       </div>
