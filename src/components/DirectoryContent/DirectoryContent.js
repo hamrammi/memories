@@ -13,10 +13,10 @@ const GQL_nodeContent = gql`
   }
 `
 
-function DirectoryContent ({ activeId }) {
+function DirectoryContent ({ activeNodeId }) {
   return (
     <>
-      <Query query={GQL_nodeContent} variables={{ nodeId: activeId }}>
+      <Query query={GQL_nodeContent} variables={{ nodeId: activeNodeId }}>
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
@@ -43,7 +43,7 @@ function DirectoryContent ({ activeId }) {
 
 function mapStateToProps (state) {
   return {
-    activeId: state.directories.activeId
+    activeNodeId: state.directories.SearchMemories__activeId
   }
 }
 

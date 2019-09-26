@@ -1,0 +1,13 @@
+.SearchBox__input {
+  background-color: darkcyan;
+  color: white;
+  border-color: darkcyan;
+}
+
+.SearchBox__input::placeholder {
+  color: white;
+}
+
+.SearchBox__plus-icon {
+  font-size: 1.4rem;
+}

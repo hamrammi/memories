@@ -2,7 +2,7 @@ import React from 'react'
 import DirectoryTree from "../DirectoryTree/DirectoryTree";
 import DirectoryContent from "../DirectoryContent/DirectoryContent";
 
-function Home () {
+function SearchMemories () {
   return (
     <div className={'row'}>
       <div className="col-4">
@@ -15,4 +15,4 @@ function Home () {
   )
 }
 
-export default Home
+export default SearchMemories

@@ -1,20 +1,25 @@
 export const TOGGLE_SUBDIRECTORIES = 'TOGGLE_SUBDIRECTORIES'
-export const LOAD_DIRECTORY_CONTENT = 'LOAD_DIRECTORY_CONTENT'
+export const SEARCH_MEMORIES__LOAD_DIRECTORY_CONTENT = 'LOAD_DIRECTORY_CONTENT'
+export const ADD_MEMORY__MARK_DIRECTORY_AS_ACTIVE = 'ADDMEMORY::MARK_DIRECTORY_AS_ACTIVE'
 
-export function toggleSubdirectories(directoryId) {
+export function toggleSubdirectories(directoryId, component) {
   return {
     type: TOGGLE_SUBDIRECTORIES,
-    payload: {
-      directoryId
-    }
+    payload: { directoryId },
+    meta: { component }
   }
 }
 
-export function loadDirectoryContent (directoryId) {
+export function SearchMemoriesLoadDirectoryContent (directoryId) {
   return {
-    type: LOAD_DIRECTORY_CONTENT,
-    payload: {
-      directoryId
-    }
+    type: SEARCH_MEMORIES__LOAD_DIRECTORY_CONTENT,
+    payload: { directoryId }
+  }
+}
+
+export function AddMemoryMarkDirectoryAsActive (directoryId) {
+  return {
+    type: ADD_MEMORY__MARK_DIRECTORY_AS_ACTIVE,
+    payload: { directoryId }
   }
 }

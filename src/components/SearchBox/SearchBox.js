@@ -1,20 +1,21 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import './SearchBox.css'
 
 function SearchBox () {
   return (
-    <>
-      <div className="my-4">
-        <input className="form-control form-control-lg"
-               autoComplete="off"
-               type="text" name="search" id="search" placeholder="Search "/>
+    <nav className="navbar fixed-top navbar-light" style={{ backgroundColor: '#17a2b8' }}>
+      <div className="d-flex justify-content-center w-100">
+        <div>
+          <input className="form-control SearchBox__input" type="search" placeholder="Search" aria-label="Search"/>
+        </div>
+        <div className="d-flex align-items-center">
+          <Link to={'/add'} className="ml-3 SearchBox__plus-icon">
+            <i className={'fas fa-plus-square text-light'}/>
+          </Link>
+        </div>
       </div>
-      <div className="my-4">
-        <Link to={'/add'} className={'btn btn-outline-info'}>
-          Добавить
-        </Link>
-      </div>
-    </>
+    </nav>
   )
 }
 
