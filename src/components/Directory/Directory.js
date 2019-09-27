@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import {
-  AddMemoryMarkDirectoryAsActive,
-  SearchMemoriesLoadDirectoryContent,
+  selectDirectory,
   toggleSubdirectories
 } from "../../store/actions/actions";
 import './Directory.css'
 import DirectoryContext from "../../contexts/DIrectoryContext";
 
+const themes = { SearchMemories: 'info', AddMemory: 'warning' }
+
 function Directory ({ directory, expandedDirectories, onToggle, onClick }) {
   const context = useContext(DirectoryContext)
-  const theme = context === 'SearchMemories' ? 'info' : 'danger'
-  const onDirectoryClick = onClick[context]
+  const theme = themes[context]
 
   const isExpanded = expandedDirectories[context].indexOf(directory.id) !== -1
   const subNodes = directory.__subNodes
@@ -23,7 +23,7 @@ function Directory ({ directory, expandedDirectories, onToggle, onClick }) {
             <i className={`Directory__caret text-${theme} fas ` + (isExpanded ? 'fa-caret-down' : 'fa-caret-right')}/>
           </span>
         </div>
-        <div onClick={() => onDirectoryClick(directory.id)} className="py-2 pr-2 Directory__name">
+        <div onClick={() => onClick(directory.id, context)} className="py-2 pr-2 Directory__name">
           <i className={`mr-2 fas fa-folder text-${theme}`}/>
           { directory.name }
         </div>
@@ -48,17 +48,7 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = {
   onToggle: toggleSubdirectories,
-  onClick: function (context) {
-    if (context == 'SearchMemories') {
-      //
-    } else {
-      //
-    }
-  },
-  onClick1:  {
-    AddMemory: AddMemoryMarkDirectoryAsActive,
-    SearchMemories: SearchMemoriesLoadDirectoryContent
-  }
+  onClick: selectDirectory
 }
 
 const ConnectedDirectory = connect(mapStateToProps, mapDispatchToProps)(Directory)

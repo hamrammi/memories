@@ -1,4 +1,4 @@
-import { ADD_MEMORY__MARK_DIRECTORY_AS_ACTIVE, SEARCH_MEMORIES__LOAD_DIRECTORY_CONTENT, TOGGLE_SUBDIRECTORIES } from "../actions/actions";
+import { SELECT_DIRECTORY, TOGGLE_SUBDIRECTORIES } from "../actions/actions";
 
 const initialState = {
   SearchMemories__activeId: 0,
@@ -8,14 +8,16 @@ const initialState = {
 }
 
 function directories (state = initialState, action) {
+  let stateKey = ''
   switch (action.type) {
-    case SEARCH_MEMORIES__LOAD_DIRECTORY_CONTENT:
+    case SELECT_DIRECTORY:
+      stateKey = `${action.meta.component}__activeId`
       return Object.assign({}, state, {
-        SearchMemories__activeId: action.payload.directoryId
+        [stateKey]: action.payload.directoryId
       })
     case TOGGLE_SUBDIRECTORIES:
       const directoryId = action.payload.directoryId
-      const stateKey = `${action.meta.component}__expandedIds`
+      stateKey = `${action.meta.component}__expandedIds`
       const oldState = state[stateKey]
       const index = oldState.indexOf(directoryId)
       let expandedIds = []
@@ -25,10 +27,6 @@ function directories (state = initialState, action) {
         expandedIds = oldState.concat(directoryId)
       }
       return Object.assign({}, state, { [stateKey]: expandedIds })
-    case ADD_MEMORY__MARK_DIRECTORY_AS_ACTIVE:
-      return Object.assign({}, state, {
-        AddMemory__activeId: action.payload.directoryId
-      })
     default:
       return state
   }
