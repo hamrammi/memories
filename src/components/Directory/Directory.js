@@ -9,7 +9,7 @@ import DirectoryContext from "../../contexts/DIrectoryContext";
 
 const themes = { SearchMemories: 'info', AddMemory: 'warning' }
 
-function Directory ({ directory, expandedDirectories, onToggle, onClick }) {
+function Directory ({ directory, expandedDirectories, activeDirectoryIds, onToggle, onClick }) {
   const context = useContext(DirectoryContext)
   const theme = themes[context]
 
@@ -25,7 +25,9 @@ function Directory ({ directory, expandedDirectories, onToggle, onClick }) {
         </div>
         <div onClick={() => onClick(directory.id, context)} className="py-2 pr-2 Directory__name">
           <i className={`mr-2 fas fa-folder text-${theme}`}/>
-          { directory.name }
+          <span style={{ fontWeight: activeDirectoryIds[context] === directory.id ? 'bold' : 'normal' }}>
+            {directory.name}
+          </span>
         </div>
       </div>
       <div className="ml-4">
@@ -41,7 +43,13 @@ function mapStateToProps (state) {
   return {
     expandedDirectories: {
       SearchMemories: state.directories.SearchMemories__expandedIds,
-      AddMemory: state.directories.AddMemory__expandedIds
+      AddMemory: state.directories.AddMemory__expandedIds,
+      AddDirectory: state.directories.AddDirectory__expandedIds
+    },
+    activeDirectoryIds: {
+      SearchMemories: state.directories.SearchMemories__activeId,
+      AddMemory: state.directories.AddMemory__activeId,
+      AddDirectory: state.directories.AddDirectory__activeId
     }
   }
 }

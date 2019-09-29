@@ -2,23 +2,28 @@
 
 schema {
   query: Query
+  mutation: Mutation
 }
 
-type Node {
+type Directory {
   id: ID!
-  level: Int!
   name: String!
   parentId: ID
 }
 
-type NodeContent {
+type Memory {
   description: String
+  directoryId: ID!
   id: ID!
   title: String!
 }
 
+type Mutation {
+  createDirectory(name: String!, parentId: ID): Directory
+  createMemory(description: String, directoryId: ID!, title: String!): Memory
+}
+
 type Query {
-  info: String!
-  nodeContent(nodeId: ID!): [NodeContent!]
-  nodes: [Node!]
+  directories: [Directory!]
+  memories(directoryId: ID!): [Memory!]
 }

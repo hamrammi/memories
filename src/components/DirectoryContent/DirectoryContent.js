@@ -3,24 +3,25 @@ import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
-const GQL_nodeContent = gql`
-  query ($nodeId: ID!) {
-    nodeContent(nodeId: $nodeId) {
+const GQL_memories = gql`
+  query ($directoryId: ID!) {
+    memories(directoryId: $directoryId) {
       id
       title
       description
+      directoryId
     }
   }
 `
 
-function DirectoryContent ({ activeNodeId }) {
+function DirectoryContent ({ directoryId }) {
   return (
     <>
-      <Query query={GQL_nodeContent} variables={{ nodeId: activeNodeId }}>
+      <Query query={GQL_memories} variables={{ directoryId }}>
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          const items = data['nodeContent']
+          const items = data['memories']
 
           if (items.length === 0) return <div><i>There're no items yet</i></div>
           return (
@@ -43,7 +44,7 @@ function DirectoryContent ({ activeNodeId }) {
 
 function mapStateToProps (state) {
   return {
-    activeNodeId: state.directories.SearchMemories__activeId
+    directoryId: state.directories.SearchMemories__activeId
   }
 }
 

@@ -2,14 +2,14 @@ import React from 'react'
 import Directory from "../Directory/Directory"
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import { Link } from 'react-router-dom'
 
-const GQL_nodes = gql`
+const GQL_directories = gql`
   query {
-    nodes {
+    directories {
       id
       name
       parentId
-      level
     }
   }
 `
@@ -17,11 +17,11 @@ const GQL_nodes = gql`
 function DirectoryTree () {
   return (
     <>
-      <Query query={GQL_nodes}>
+      <Query query={GQL_directories}>
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          const tree = makeTree(data.nodes)
+          const tree = makeTree(data.directories)
           return (
             <div>
               {Object.keys(tree)
@@ -30,7 +30,7 @@ function DirectoryTree () {
           )
         }}
       </Query>
-      <button className="mt-2 btn btn-light"><i className="mr-2 text-info fas fa-plus"/>Add new</button>
+      <Link to={'/add-directory'} className="mt-2 btn btn-outline-dark"><i className="mr-2 text-info fas fa-plus"/>Add</Link>
     </>
   )
 }

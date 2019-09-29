@@ -1,10 +1,12 @@
 import { SELECT_DIRECTORY, TOGGLE_SUBDIRECTORIES } from "../actions/actions";
 
 const initialState = {
-  SearchMemories__activeId: 0,
   SearchMemories__expandedIds: [],
+  SearchMemories__activeId: '',
   AddMemory__expandedIds: [],
-  AddMemory__activeId: 0
+  AddMemory__activeId: '',
+  AddDirectory__expandedIds: [],
+  AddDirectory__activeId: ''
 }
 
 function directories (state = initialState, action) {
