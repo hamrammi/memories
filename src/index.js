@@ -19,7 +19,7 @@ const apolloClient = new ApolloClient({
 })
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/apps/memories">
     <ApolloProvider client={apolloClient}>
       <ReduxProvider store={store}>
         <App />
