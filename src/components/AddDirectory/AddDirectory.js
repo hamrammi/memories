@@ -23,7 +23,7 @@ function AddDirectory ({ selectedDirectoryId }) {
     <div className={'row'}>
       <div className="col-12">
         <h3 className={'mb-3'}>
-          <Link to={'/'}><i className={'fas fa-arrow-left mr-3 text-info'}/></Link>
+          <Link to={''}><i className={'fas fa-arrow-left mr-3 text-info'}/></Link>
           <strong>New directory</strong>
         </h3>
         <div className={'AddDirectory__step'}>

@@ -30,7 +30,7 @@ function DirectoryTree () {
           )
         }}
       </Query>
-      <Link to={'/add-directory'} className="mt-2 btn btn-outline-dark"><i className="mr-2 text-info fas fa-plus"/>Add</Link>
+      <Link to={'add-directory'} className="mt-2 btn btn-outline-dark"><i className="mr-2 text-info fas fa-plus"/>Add</Link>
     </>
   )
 }

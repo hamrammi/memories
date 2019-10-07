@@ -10,7 +10,7 @@ function SearchBox () {
           <input className="form-control SearchBox__input" type="search" placeholder="Search" aria-label="Search"/>
         </div>
         <div className="d-flex align-items-center">
-          <Link to={'/add'} className="ml-3 SearchBox__plus-icon">
+          <Link to={'add'} className="ml-3 SearchBox__plus-icon">
             <i className={'fas fa-plus-square text-light'}/>
           </Link>
         </div>
