@@ -36,6 +36,16 @@ function AddMemory ({ selectedDirectoryId, selectDirectory }) {
           <Link to={'/'}><i className={'fas fa-arrow-left mr-3 text-info'}/></Link>
           <strong>New memory</strong>
         </h3>
+      </div>
+      <div className="col-12 col-xl-4">
+        <div className={'AddMemory__step'}>
+          <div className={'mt-4 mb-2'}><strong>Choose a folder</strong></div>
+          <DirectoryContext.Provider value={'AddMemory'}>
+            <DirectoryTree/>
+          </DirectoryContext.Provider>
+        </div>
+      </div>
+      <div className="col-12 col-xl-8">
         <div className={'AddMemory__step'}>
           <div className={'mb-2'}><strong>Title</strong></div>
           <input type="text" className={'form-control'}
@@ -46,13 +56,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory }) {
           <input type="text" className={'form-control'}
                  onChange={e => setDescription(e.target.value)} value={description}/>
         </div>
-        <div className={'AddMemory__step'}>
-          <div className={'mt-4 mb-2'}><strong>Choose a folder</strong></div>
-          <DirectoryContext.Provider value={'AddMemory'}>
-            <DirectoryTree/>
-          </DirectoryContext.Provider>
-        </div>
-        <div className="text-center">
+        <div className="text-center mt-4">
           <Mutation mutation={GQL_createMemory} variables={{ title, description, directoryId: selectedDirectoryId }}>
             {createMemoryMutation =>
               <button onClick={() => onClick(createMemoryMutation)} className="btn btn-info">Save</button>
