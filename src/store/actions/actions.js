@@ -16,3 +16,12 @@ export function selectDirectory (directoryId, component) {
     meta: { component }
   }
 }
+
+export const TOGGLE_NOTIFIER = 'TOGGLE_NOTIFIER'
+
+export function toggleNotifier (type, message = '') {
+  return {
+    type: TOGGLE_NOTIFIER,
+    payload: { type, message }
+  }
+}

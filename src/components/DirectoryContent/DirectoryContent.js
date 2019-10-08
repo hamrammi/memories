@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
-const GQL_memories = gql`
+export const GQL_memories = gql`
   query ($directoryId: ID!) {
     memories(directoryId: $directoryId) {
       id

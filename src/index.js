@@ -13,7 +13,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 const apolloClient = new ApolloClient({
   link: createHttpLink({
-    uri: 'http://localhost:4000'
+    // uri: 'http://localhost:4000'
+    uri: 'https://netherenth.xyz/apps/memories/graphql'
   }),
   cache: new InMemoryCache()
 })
