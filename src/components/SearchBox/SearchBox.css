@@ -11,3 +11,8 @@
 .SearchBox__plus-icon {
   font-size: 1.4rem;
 }
+
+.SearchBox__title {
+  width: 100px;
+  font-size: 1.3rem;
+}

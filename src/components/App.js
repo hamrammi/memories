@@ -7,15 +7,17 @@ import AddDirectory from './AddDirectory/AddDirectory'
 
 function App () {
   return (
-    <div className={'container'}>
+    <div>
       <SearchBox/>
-      <div className={'row'} style={{ marginTop: '70px' }}>
-        <div className="col-12">
-          <Switch>
-            <Route exact path={'/'} component={SearchMemories} />
-            <Route exact path={'/add'} component={AddMemory} />
-            <Route exact path={'/add-directory'} component={AddDirectory} />>
-          </Switch>
+      <div className="container">
+        <div className={'row'} style={{ marginTop: '70px' }}>
+          <div className="col-12">
+            <Switch>
+              <Route exact path={'/'} component={SearchMemories} />
+              <Route exact path={'/add'} component={AddMemory} />
+              <Route exact path={'/add-directory'} component={AddDirectory} />>
+            </Switch>
+          </div>
         </div>
       </div>
     </div>
