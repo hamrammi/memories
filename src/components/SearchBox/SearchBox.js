@@ -23,7 +23,7 @@ function SearchBox ({ notifiers }) {
             <div className="by-hand text-white d-flex align-items-center SearchBox__title">Memories</div>
             <div className="flex-fill d-flex justify-content-end">
               <div className="w-50 d-none d-lg-block mx-3">
-                <input className="form-control form-control-lg SearchBox__input" type="search" placeholder="Search"
+                <input className="form-control SearchBox__input" type="search" placeholder="Search"
                        aria-label="Search"/>
               </div>
               <div className="w-100 d-block d-lg-none mx-3">

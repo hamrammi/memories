@@ -16,22 +16,27 @@ const GQL_directories = gql`
 
 function DirectoryTree () {
   return (
-    <>
-      <Query query={GQL_directories}>
-        {({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>
-          if (error) return <div>Error</div>
-          const tree = makeTree(data.directories)
-          return (
-            <div>
-              {Object.keys(tree)
-                .map(nodeId => <Directory key={nodeId} directory={tree[nodeId]} />)}
-            </div>
-          )
-        }}
-      </Query>
-      <Link to={'add-directory'} className="mt-2 btn btn-outline-dark"><i className="mr-2 text-info fas fa-plus"/>Add</Link>
-    </>
+    <div className="card shadow-sm mb-4">
+      <div className="card-body">
+        <h5 className="card-title text-center"><strong>Choose a folder</strong></h5>
+        <Query query={GQL_directories}>
+          {({ loading, error, data }) => {
+            if (loading) return <div>Fetching</div>
+            if (error) return <div>Error</div>
+            const tree = makeTree(data.directories)
+            return (
+              <div>
+                {Object.keys(tree)
+                  .map(nodeId => <Directory key={nodeId} directory={tree[nodeId]} />)}
+              </div>
+            )
+          }}
+        </Query>
+      </div>
+      <div className="card-footer text-center">
+        <Link to={'add-directory'} className="text-main">New directory</Link>
+      </div>
+    </div>
   )
 }
 

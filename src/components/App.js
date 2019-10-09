@@ -10,7 +10,7 @@ function App () {
     <div>
       <SearchBox/>
       <div className="container">
-        <div className={'row'} style={{ marginTop: '90px' }}>
+        <div className={'row'} style={{ marginTop: '80px' }}>
           <div className="col-12">
             <Switch>
               <Route exact path={'/'} component={SearchMemories} />

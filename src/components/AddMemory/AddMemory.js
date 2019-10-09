@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DirectoryTree from "../DirectoryTree/DirectoryTree";
-import DirectoryContext from "../../contexts/DIrectoryContext";
+import DirectoryContext from "../../contexts/DirectoryContext";
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Mutation } from 'react-apollo'
@@ -43,40 +43,41 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, notify }) {
   }
 
   return (
-    <div className={'row'}>
+    <div className="row">
       <div className="col-12">
-        <h3 className={'mb-3'}>
-          <Link to={''}><i className={'fas fa-arrow-left mr-3 text-info'}/></Link>
+        <h3 className={'mb-4'}>
+          <Link to={''}><i className={'fas fa-chevron-left mr-3 text-main'}/></Link>
           <strong>New memory</strong>
         </h3>
       </div>
       <div className="col-12 col-lg-4">
-        <div className={'AddMemory__step'}>
-          <div className={'mt-4 mb-2'}><strong>Choose a folder</strong></div>
-          <DirectoryContext.Provider value={'AddMemory'}>
-            <DirectoryTree/>
-          </DirectoryContext.Provider>
-        </div>
+        <DirectoryContext.Provider value={'AddMemory'}>
+          <DirectoryTree/>
+        </DirectoryContext.Provider>
       </div>
       <div className="col-12 col-lg-8">
-        <div className={'AddMemory__step'}>
-          <div className={'mb-2'}><strong>Title</strong></div>
-          <input type="text" className={'form-control'}
-                 onChange={e => setTitle(e.target.value)} value={title}/>
-        </div>
-        <div className={'AddMemory__step'}>
-          <div className={'mt-4 mb-2'}><strong>Description</strong></div>
-          <input type="text" className={'form-control'}
-                 onChange={e => setDescription(e.target.value)} value={description}/>
-        </div>
-        <div className="text-center mt-4">
-          <Mutation mutation={GQL_createMemory}
-                    variables={{ title, description, directoryId: selectedDirectoryId }}
-                    update={onUpdate}>
-            {createMemoryMutation =>
-              <button onClick={() => onClick(createMemoryMutation)} className="btn btn-info">Save</button>
-            }
-          </Mutation>
+        <div className="card shadow-sm">
+          <div className="card-body">
+            <div className="AddMemory__step">
+              <div className={'mb-2'}><strong>Title</strong></div>
+              <input type="text" className="form-control"
+                     onChange={e => setTitle(e.target.value)} value={title}/>
+            </div>
+            <div className="AddMemory__step">
+              <div className={'mt-4 mb-2'}><strong>Description</strong></div>
+              <textarea className="form-control" rows="4"
+                        onChange={e => setDescription(e.target.value)} value={description}/>
+            </div>
+          </div>
+          <div className="card-footer">
+            <Mutation mutation={GQL_createMemory}
+                      variables={{ title, description, directoryId: selectedDirectoryId }}
+                      update={onUpdate}>
+              {createMemoryMutation =>
+                <button onClick={() => onClick(createMemoryMutation)} className="btn btn-main">Save memory</button>
+              }
+            </Mutation>
+          </div>
         </div>
       </div>
     </div>

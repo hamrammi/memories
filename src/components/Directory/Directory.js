@@ -5,9 +5,9 @@ import {
   toggleSubdirectories
 } from "../../store/actions/actions";
 import './Directory.css'
-import DirectoryContext from "../../contexts/DIrectoryContext";
+import DirectoryContext from "../../contexts/DirectoryContext";
 
-const themes = { SearchMemories: 'info', AddMemory: 'warning' }
+const themes = { SearchMemories: 'main', AddMemory: 'main', AddDirectory: 'main' }
 
 function Directory ({ directory, expandedDirectories, activeDirectoryIds, onToggle, onClick }) {
   const context = useContext(DirectoryContext)
@@ -17,7 +17,7 @@ function Directory ({ directory, expandedDirectories, activeDirectoryIds, onTogg
   const subNodes = directory.__subNodes
   return (
     <div>
-      <div className="d-flex">
+      <div className="d-flex" style={{ fontSize: '1em' }}>
         <div onClick={() => onToggle(directory.id, context)} className={'pr-2 d-flex align-items-center'}>
           <span className={'Directory__caret-container mb-0 ' + (Object.keys(subNodes).length === 0 ? 'invisible' : '')}>
             <i className={`Directory__caret text-${theme} fas ` + (isExpanded ? 'fa-caret-down' : 'fa-caret-right')}/>
