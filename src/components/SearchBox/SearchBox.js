@@ -17,13 +17,13 @@ function SearchBox ({ notifiers }) {
         }}>{ notifiers.error }</div>
       ) }
 
-      <nav className="navbar fixed-top navbar-light shadow" style={{ backgroundColor: '#00c7ac' }}>
+      <nav className="navbar fixed-top navbar-light shadow-sm" style={{ backgroundColor: '#00c7ac' }}>
         <div className="container px-0 px-lg-3">
           <div className="d-flex justify-content-between w-100">
             <div className="by-hand text-white d-flex align-items-center SearchBox__title">Memories</div>
             <div className="flex-fill d-flex justify-content-end">
               <div className="w-50 d-none d-lg-block mx-3">
-                <input className="form-control SearchBox__input" type="search" placeholder="Search"
+                <input className="form-control form-control-lg SearchBox__input" type="search" placeholder="Search"
                        aria-label="Search"/>
               </div>
               <div className="w-100 d-block d-lg-none mx-3">
