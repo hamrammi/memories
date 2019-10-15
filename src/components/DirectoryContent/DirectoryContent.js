@@ -27,7 +27,7 @@ function DirectoryContent ({ directoryId }) {
           return (
             items.map((x) => {
               return (
-                <div className="card mb-2 rounded-lg pb-2 pt-3 px-3" key={x.id}>
+                <div className="shadow-sm bg-white mb-2 rounded-lg pb-2 pt-3 px-3" key={x.id}>
                   <h5 className="text-main"><strong>{x.title}</strong></h5>
                   <div className="mb-2">{ x.description }</div>
                   <div className="text-muted">
