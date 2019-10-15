@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=cyrillic');
-@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700&display=swap');
 
 :root {
   font-size: 16px;
+  /*--main-color: #00c7ac;*/
+  --main-color: #1abc9c;
 }
 
 body {
@@ -20,12 +22,12 @@ code {
     monospace;
 }
 
-.by-hand {
-  font-family: 'Permanent Marker', cursive;
+.eyes-friendly {
+  font-family: 'Merriweather', serif;
 }
 
 .text-main {
-  color: #00c7ac;
+  color: var(--main-color);
 }
 
 .btn-main {

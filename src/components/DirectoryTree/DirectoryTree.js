@@ -16,8 +16,8 @@ const GQL_directories = gql`
 
 function DirectoryTree () {
   return (
-    <div className="card shadow-sm mb-4">
-      <div className="card-body">
+    <div className="mb-4 ">
+      <div className="">
         <h5 className="card-title text-center"><strong>Choose a folder</strong></h5>
         <Query query={GQL_directories}>
           {({ loading, error, data }) => {

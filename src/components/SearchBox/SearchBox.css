@@ -14,7 +14,6 @@
 
 .SearchBox__title {
   font-size: 1.3em;
-  text-shadow: 0 0 2px rgba(0,0,0,.9);
 }
 
 @media only screen and (min-width: 992px) {

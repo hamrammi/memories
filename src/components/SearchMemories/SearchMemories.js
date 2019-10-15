@@ -9,6 +9,7 @@ function SearchMemories () {
         <DirectoryTree/>
       </div>
       <div className="col-12 col-lg-8">
+        <h5 className="card-title"><strong>Directory content</strong></h5>
         <DirectoryContent/>
       </div>
     </div>

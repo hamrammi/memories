@@ -27,9 +27,12 @@ function DirectoryContent ({ directoryId }) {
           return (
             items.map((x) => {
               return (
-                <div className="border-bottom py-2" key={x.id}>
-                  <div className="text-info">{ x.title }</div>
-                  <div><small>{ x.description }</small></div>
+                <div className="card mb-2 rounded-lg pb-2 pt-3 px-3" key={x.id}>
+                  <h5 className="text-main"><strong>{x.title}</strong></h5>
+                  <div className="mb-2">{ x.description }</div>
+                  <div className="text-muted">
+                    #super #coolstuff
+                  </div>
                 </div>
               )
             })
