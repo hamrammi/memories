@@ -45,10 +45,10 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, notify }) {
   return (
     <div className="row">
       <div className="col-12">
-        <h3 className={'mb-4'}>
-          <Link to={''}><i className={'fas fa-chevron-left mr-3 text-main'}/></Link>
+        <h4 className="mb-4 eyes-friendly">
+          <Link to={''}><i className="fas fa-chevron-left mr-3 text-main"/></Link>
           <strong>New memory</strong>
-        </h3>
+        </h4>
       </div>
       <div className="col-12 col-lg-4">
         <DirectoryContext.Provider value={'AddMemory'}>
@@ -56,28 +56,26 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, notify }) {
         </DirectoryContext.Provider>
       </div>
       <div className="col-12 col-lg-8">
-        <div className="card shadow-sm">
-          <div className="card-body">
-            <div className="AddMemory__step">
-              <div className={'mb-2'}><strong>Title</strong></div>
-              <input type="text" className="form-control"
-                     onChange={e => setTitle(e.target.value)} value={title}/>
-            </div>
-            <div className="AddMemory__step">
-              <div className={'mt-4 mb-2'}><strong>Description</strong></div>
-              <textarea className="form-control" rows="4"
-                        onChange={e => setDescription(e.target.value)} value={description}/>
-            </div>
+        <h5 className="card-title"><strong>Memory bio</strong></h5>
+        <div className="shadow-sm p-3 bg-white rounded-lg">
+          <div className="AddMemory__step">
+            <div className={'mb-2'}><strong>Title</strong></div>
+            <input type="text" className="form-control border"
+                   onChange={e => setTitle(e.target.value)} value={title}/>
           </div>
-          <div className="card-footer">
-            <Mutation mutation={GQL_createMemory}
-                      variables={{ title, description, directoryId: selectedDirectoryId }}
-                      update={onUpdate}>
-              {createMemoryMutation =>
-                <button onClick={() => onClick(createMemoryMutation)} className="btn btn-main">Save memory</button>
-              }
-            </Mutation>
+          <div className="AddMemory__step mb-3">
+            <div className={'mt-4 mb-2'}><strong>Description</strong></div>
+            <textarea className="form-control border" rows="4"
+                      onChange={e => setDescription(e.target.value)} value={description}/>
           </div>
+          <Mutation mutation={GQL_createMemory}
+                    variables={{ title, description, directoryId: selectedDirectoryId }}
+                    update={onUpdate}>
+            {createMemoryMutation =>
+              <button onClick={() => onClick(createMemoryMutation)}
+                      className="btn btn-main shadow-sm rounded-lg">Save memory</button>
+            }
+          </Mutation>
         </div>
       </div>
     </div>

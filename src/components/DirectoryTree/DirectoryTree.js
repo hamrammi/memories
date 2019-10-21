@@ -3,6 +3,8 @@ import Directory from "../Directory/Directory"
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
+import ErrorAlert from '../shared/ErrorAlert'
+import Fetching from '../shared/Fetching'
 
 const GQL_directories = gql`
   query {
@@ -16,13 +18,13 @@ const GQL_directories = gql`
 
 function DirectoryTree () {
   return (
-    <div className="mb-4 ">
-      <div className="">
-        <h5 className="card-title text-center"><strong>Choose a folder</strong></h5>
+    <div className="mb-4">
+      <div className="mb-3">
+        <h5 className="card-title"><strong>Choose a folder</strong></h5>
         <Query query={GQL_directories}>
           {({ loading, error, data }) => {
-            if (loading) return <div>Fetching</div>
-            if (error) return <div>Error</div>
+            if (loading) return <Fetching/>
+            if (error) return <ErrorAlert message={error.message}/>
             const tree = makeTree(data.directories)
             return (
               <div>
@@ -33,7 +35,7 @@ function DirectoryTree () {
           }}
         </Query>
       </div>
-      <div className="card-footer text-center">
+      <div className="text-center">
         <Link to={'add-directory'} className="text-main">New directory</Link>
       </div>
     </div>

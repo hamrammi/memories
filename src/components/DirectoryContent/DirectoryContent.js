@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import Fetching from '../shared/Fetching'
+import ErrorAlert from '../shared/ErrorAlert'
 
 export const GQL_memories = gql`
   query ($directoryId: ID!) {
@@ -19,8 +21,8 @@ function DirectoryContent ({ directoryId }) {
     <>
       <Query query={GQL_memories} variables={{ directoryId }}>
         {({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>
-          if (error) return <div>Error</div>
+          if (loading) return <Fetching/>
+          if (error) return <ErrorAlert message={error.message}/>
           const items = data['memories']
 
           if (items.length === 0) return <div><i>There're no items yet</i></div>
