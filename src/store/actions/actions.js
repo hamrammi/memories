@@ -17,11 +17,19 @@ export function selectDirectory (directoryId, component) {
   }
 }
 
-export const TOGGLE_NOTIFIER = 'TOGGLE_NOTIFIER'
+export const SHOW_NOTIFIER = 'SHOW_NOTIFIER'
+export const HIDE_NOTIFIER = 'HIDE_NOTIFIER'
 
-export function toggleNotifier (type, message = '') {
+export function showNotifier (type, message = '') {
   return {
-    type: TOGGLE_NOTIFIER,
+    type: SHOW_NOTIFIER,
     payload: { type, message }
+  }
+}
+
+export function hideNotifier (type = '__all__') {
+  return {
+    type: HIDE_NOTIFIER,
+    payload: { type }
   }
 }

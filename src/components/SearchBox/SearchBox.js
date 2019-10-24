@@ -4,17 +4,25 @@ import './SearchBox.css'
 import { connect } from 'react-redux'
 
 function SearchBox ({ notifiers }) {
+  const alertStyles = {
+    left: '0',
+    right: '0',
+    top: '0',
+    zIndex: '10000',
+    width: '100vw',
+    textAlign: 'center',
+    height: '54px'
+  }
+
+  const alertClasses = 'alert alert-light position-fixed border-0 shadow-sm rounded-0 d-flex align-items-center justify-content-center'
+
   return (
     <>
       { notifiers.success && (
-        <div className="alert alert-success position-absolute" style={{
-          left: 0, right: 0
-        }}>{ notifiers.success }</div>
+        <div className={alertClasses} style={alertStyles}><strong>{notifiers.success}</strong></div>
       ) }
       { notifiers.error && (
-        <div className="alert alert-danger position-absolute" style={{
-          left: 0, right: 0
-        }}>{ notifiers.error }</div>
+        <div className={alertClasses} style={alertStyles}><strong>{notifiers.error}</strong></div>
       ) }
 
       <nav className="navbar fixed-top navbar-light shadow-sm" style={{ backgroundColor: '#00c7ac' }}>
