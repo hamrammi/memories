@@ -19,15 +19,43 @@ const GQL_createMemory = gql`
   }
 `
 
+function GQLErrors ({ errors }) {
+  if (errors.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="alert alert-danger border-0 shadow-sm rounded-lg">
+      {errors.map((error, errIdx) => (
+        <div key={'err-' + errIdx}>
+          <p><strong>{error.message}</strong></p>
+          {Object.values(error.errors).map((errMsg, msgIdx) => (
+            <div key={'msg-' + msgIdx}>{ errMsg }</div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNotifier }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [errors, setErrors] = useState([])
 
   function onClick (handler) {
     handler()
     setTitle('')
     setDescription('')
     selectDirectory('')
+  }
+
+  function onError (gqlError) {
+    const errors = gqlError.graphQLErrors.map(({ message, extensions }) => ({
+      message,
+      errors: extensions.errors
+    }))
+    setErrors(errors)
   }
 
   function onUpdate (store, { data: { createMemory } }) {
@@ -55,6 +83,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
       </div>
       <div className="col-12 col-lg-8">
         <h5 className="card-title"><strong>Memory bio</strong></h5>
+        <GQLErrors errors={errors}/>
         <div className="shadow-sm p-3 bg-white rounded-lg">
           <div className="AddMemory__step">
             <div className={'mb-2'}><strong>Title</strong></div>
@@ -68,6 +97,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
           </div>
           <Mutation mutation={GQL_createMemory}
                     variables={{ title, description, directoryId: selectedDirectoryId }}
+                    onError={onError}
                     update={onUpdate}>
             {createMemoryMutation =>
               <button onClick={() => onClick(createMemoryMutation)}
