@@ -41,8 +41,10 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
   function onUpdate (store, { data: { createMemory } }) {
     try {
       const data = store.readQuery({ query: GQL_memories, variables: { directoryId: selectedDirectoryId } })
-      data.memories.push(createMemory)
-      store.writeQuery({ query: GQL_memories, variables: { directoryId: selectedDirectoryId }, data })
+      const newData = Object.assign({}, data, {
+        memories: data.memories.concat(createMemory)
+      })
+      store.writeQuery({ query: GQL_memories, variables: { directoryId: selectedDirectoryId }, data: newData })
     } catch (e) {}
     showNotifier('success', 'Memory saved!')
     setTimeout(hideNotifier, 2000)

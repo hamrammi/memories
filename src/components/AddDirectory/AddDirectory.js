@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
-import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
+import { hideNotifier, showNotifier } from "../../store/actions/actions";
 
 
 const GQL_createDirectory = gql`
@@ -30,10 +30,10 @@ function AddDirectory ({ selectedDirectoryId, showNotifier, hideNotifier }) {
   function onUpdate (store, { data: { createDirectory }}) {
     try {
       const data = store.readQuery({ query: GQL_directories })
-      console.log(data)
-      data.directories.push(createDirectory)
-      console.log(data)
-      store.writeQuery({ query: GQL_directories, data })
+      const newData = Object.assign({}, data, {
+        directories: data.directories.concat(createDirectory)
+      })
+      store.writeQuery({ query: GQL_directories, data: newData })
     } catch (e) {}
     showNotifier('success', 'Directory saved!')
     setTimeout(hideNotifier, 2000)
