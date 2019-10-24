@@ -35,3 +35,18 @@ code {
   background-color: #00c7ac;
   border-color: #00c7ac;
 }
+
+.alert-danger {
+  border-width: 4px;
+}
+
+.border-default {
+  border: 1px solid #eee;
+}
+
+.panel-default {
+  border: 1px solid #eee;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  border-radius: .3rem!important;
+  background-color: #fff!important;
+}

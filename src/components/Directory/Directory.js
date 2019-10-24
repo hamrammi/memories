@@ -19,7 +19,7 @@ function Directory ({ directory, expandedDirectories, activeDirectoryIds, onTogg
   const subNodes = directory.__subNodes
   return (
     <>
-      <div className="shadow-sm mb-2 rounded-lg">
+      <div className="shadow-sm mb-2 rounded-lg border-default">
         <div className="d-flex" style={{ fontSize: '1em', borderRadius: 'inherit' }}>
           <div onClick={() => onToggle(directory.id, context)} className="Directory__icon rounded-lg px-3 d-flex align-items-center bg-light">
             <span className={'Directory__caret-container mb-0 ' + (Object.keys(subNodes).length === 0 ? 'invisible' : '')}>

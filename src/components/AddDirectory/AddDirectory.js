@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import DirectoryTree from "../DirectoryTree/DirectoryTree";
+import DirectoryTree, { GQL_directories } from "../DirectoryTree/DirectoryTree";
 import DirectoryContext from "../../contexts/DirectoryContext";
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
+import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
+import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
+
 
 const GQL_createDirectory = gql`
   mutation CreateDirectory($name: String!, $parentId: ID) {
@@ -16,8 +19,25 @@ const GQL_createDirectory = gql`
   }
 `
 
-function AddDirectory ({ selectedDirectoryId }) {
+function AddDirectory ({ selectedDirectoryId, showNotifier, hideNotifier }) {
   const [name, setName] = useState('')
+  const [errors, setErrors] = useState([])
+
+  function onError (gqlError) {
+    setErrors(transformGQLError(gqlError))
+  }
+
+  function onUpdate (store, { data: { createDirectory }}) {
+    try {
+      const data = store.readQuery({ query: GQL_directories })
+      console.log(data)
+      data.directories.push(createDirectory)
+      console.log(data)
+      store.writeQuery({ query: GQL_directories, data })
+    } catch (e) {}
+    showNotifier('success', 'Directory saved!')
+    setTimeout(hideNotifier, 2000)
+  }
 
   return (
     <div className={'row'}>
@@ -34,13 +54,17 @@ function AddDirectory ({ selectedDirectoryId }) {
       </div>
       <div className="col-12 col-lg-8">
         <h5 className="card-title"><strong>Folder information</strong></h5>
-        <div className="shadow-sm bg-white rounded-lg p-3">
+        <GQLErrors errors={errors}/>
+        <div className="panel-default p-3">
           <div className="AddDirectory__step mb-3">
             <div className={'mb-2'}><strong>Name</strong></div>
             <input type="text" className="form-control border"
                    onChange={e => setName(e.target.value)} value={name}/>
           </div>
-          <Mutation mutation={GQL_createDirectory} variables={{ name, parentId: selectedDirectoryId }}>
+          <Mutation mutation={GQL_createDirectory}
+                    update={onUpdate}
+                    onError={onError}
+                    variables={{ name, parentId: selectedDirectoryId }}>
             {createDirectoryMutation =>
               <button onClick={createDirectoryMutation} className="btn btn-main rounded-lg shadow-sm">Save directory</button>
             }
@@ -57,6 +81,11 @@ function mapStateToProps (state) {
   }
 }
 
-const ConnectedAddDirectory = connect(mapStateToProps)(AddDirectory)
+const mapDispatchToProps = {
+  showNotifier: showNotifier,
+  hideNotifier: hideNotifier
+}
+
+const ConnectedAddDirectory = connect(mapStateToProps, mapDispatchToProps)(AddDirectory)
 
 export default ConnectedAddDirectory

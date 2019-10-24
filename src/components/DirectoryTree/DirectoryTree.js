@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import ErrorAlert from '../shared/ErrorAlert'
 import Fetching from '../shared/Fetching'
 
-const GQL_directories = gql`
+export const GQL_directories = gql`
   query {
     directories {
       id

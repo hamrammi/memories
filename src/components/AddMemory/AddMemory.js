@@ -7,6 +7,7 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
 import { GQL_memories } from '../DirectoryContent/DirectoryContent'
+import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
 
 const GQL_createMemory = gql`
   mutation CreateMemory($title: String!, $description: String, $directoryId: ID!) {
@@ -19,24 +20,7 @@ const GQL_createMemory = gql`
   }
 `
 
-function GQLErrors ({ errors }) {
-  if (errors.length === 0) {
-    return null
-  }
 
-  return (
-    <div className="alert alert-danger border-0 shadow-sm rounded-lg">
-      {errors.map((error, errIdx) => (
-        <div key={'err-' + errIdx}>
-          <p><strong>{error.message}</strong></p>
-          {Object.values(error.errors).map((errMsg, msgIdx) => (
-            <div key={'msg-' + msgIdx}>{ errMsg }</div>
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-}
 
 function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNotifier }) {
   const [title, setTitle] = useState('')
@@ -51,11 +35,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
   }
 
   function onError (gqlError) {
-    const errors = gqlError.graphQLErrors.map(({ message, extensions }) => ({
-      message,
-      errors: extensions.errors
-    }))
-    setErrors(errors)
+    setErrors(transformGQLError(gqlError))
   }
 
   function onUpdate (store, { data: { createMemory } }) {
@@ -84,7 +64,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
       <div className="col-12 col-lg-8">
         <h5 className="card-title"><strong>Memory bio</strong></h5>
         <GQLErrors errors={errors}/>
-        <div className="shadow-sm p-3 bg-white rounded-lg">
+        <div className="panel-default p-3">
           <div className="AddMemory__step">
             <div className={'mb-2'}><strong>Title</strong></div>
             <input type="text" className="form-control border"
