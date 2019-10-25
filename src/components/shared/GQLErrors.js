@@ -10,7 +10,7 @@ export function GQLErrors ({ errors }) {
       {errors.map((error, errIdx) => (
         <div key={'err-' + errIdx}>
           <p><strong>{error.message}</strong></p>
-          {Object.values(error.errors).map((errMsg, msgIdx) => (
+          {error.errors && Object.values(error.errors).map((errMsg, msgIdx) => (
             <div key={'msg-' + msgIdx}>{ errMsg }</div>
           ))}
         </div>

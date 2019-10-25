@@ -27,13 +27,6 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
   const [description, setDescription] = useState('')
   const [errors, setErrors] = useState([])
 
-  function onClick (handler) {
-    handler()
-    setTitle('')
-    setDescription('')
-    selectDirectory('')
-  }
-
   function onError (gqlError) {
     setErrors(transformGQLError(gqlError))
   }
@@ -46,6 +39,10 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
       })
       store.writeQuery({ query: GQL_memories, variables: { directoryId: selectedDirectoryId }, data: newData })
     } catch (e) {}
+    setTitle('')
+    setDescription('')
+    selectDirectory('')
+    setErrors([])
     showNotifier('success', 'Memory saved!')
     setTimeout(hideNotifier, 2000)
   }
@@ -82,7 +79,7 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
                     onError={onError}
                     update={onUpdate}>
             {createMemoryMutation =>
-              <button onClick={() => onClick(createMemoryMutation)}
+              <button onClick={createMemoryMutation}
                       className="btn btn-main shadow-sm rounded-lg">Save memory</button>
             }
           </Mutation>

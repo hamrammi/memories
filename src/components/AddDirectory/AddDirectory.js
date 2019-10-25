@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
-import { hideNotifier, showNotifier } from "../../store/actions/actions";
+import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
 
 
 const GQL_createDirectory = gql`
@@ -19,7 +19,7 @@ const GQL_createDirectory = gql`
   }
 `
 
-function AddDirectory ({ selectedDirectoryId, showNotifier, hideNotifier }) {
+function AddDirectory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNotifier }) {
   const [name, setName] = useState('')
   const [errors, setErrors] = useState([])
 
@@ -35,6 +35,9 @@ function AddDirectory ({ selectedDirectoryId, showNotifier, hideNotifier }) {
       })
       store.writeQuery({ query: GQL_directories, data: newData })
     } catch (e) {}
+    setName('')
+    selectDirectory('')
+    setErrors([])
     showNotifier('success', 'Directory saved!')
     setTimeout(hideNotifier, 2000)
   }
@@ -82,6 +85,7 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = {
+  selectDirectory: (id) => selectDirectory(id, 'AddDirectory'),
   showNotifier: showNotifier,
   hideNotifier: hideNotifier
 }
