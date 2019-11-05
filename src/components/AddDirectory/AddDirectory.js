@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DirectoryTree, { GQL_directories } from "../DirectoryTree/DirectoryTree";
 import DirectoryContext from "../../contexts/DirectoryContext";
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
@@ -19,9 +19,12 @@ const GQL_createDirectory = gql`
   }
 `
 
-function AddDirectory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNotifier }) {
+function AddDirectory () {
   const [name, setName] = useState('')
   const [errors, setErrors] = useState([])
+
+  const dispatch = useDispatch()
+  const selectedDirectoryId = useSelector(state => state.directories.AddDirectory__activeId)
 
   function onError (gqlError) {
     setErrors(transformGQLError(gqlError))
@@ -36,10 +39,10 @@ function AddDirectory ({ selectedDirectoryId, selectDirectory, showNotifier, hid
       store.writeQuery({ query: GQL_directories, data: newData })
     } catch (e) {}
     setName('')
-    selectDirectory('')
+    dispatch(selectDirectory('', 'AddDirectory'))
     setErrors([])
-    showNotifier('success', 'Directory saved!')
-    setTimeout(hideNotifier, 2000)
+    dispatch(showNotifier('success', 'Directory saved!'))
+    setTimeout(() => dispatch(hideNotifier()), 2000)
   }
 
   return (
@@ -78,18 +81,4 @@ function AddDirectory ({ selectedDirectoryId, selectDirectory, showNotifier, hid
   )
 }
 
-function mapStateToProps (state) {
-  return {
-    selectedDirectoryId: state.directories.AddDirectory__activeId
-  }
-}
-
-const mapDispatchToProps = {
-  selectDirectory: (id) => selectDirectory(id, 'AddDirectory'),
-  showNotifier: showNotifier,
-  hideNotifier: hideNotifier
-}
-
-const ConnectedAddDirectory = connect(mapStateToProps, mapDispatchToProps)(AddDirectory)
-
-export default ConnectedAddDirectory
+export default AddDirectory

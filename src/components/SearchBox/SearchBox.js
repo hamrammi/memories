@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import './SearchBox.css'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-function SearchBox ({ notifiers }) {
+function SearchBox () {
   const alertStyles = {
     left: '0',
     right: '0',
@@ -15,6 +15,8 @@ function SearchBox ({ notifiers }) {
   }
 
   const alertClasses = 'alert alert-light position-fixed border-0 shadow-sm rounded-0 d-flex align-items-center justify-content-center'
+
+  const notifiers = useSelector(state => state.notifiers)
 
   return (
     <>
@@ -53,12 +55,4 @@ function SearchBox ({ notifiers }) {
   )
 }
 
-function mapStateToProps (state) {
-  return {
-    notifiers: state.notifiers
-  }
-}
-
-const ConnectedSearchBox = connect(mapStateToProps)(SearchBox)
-
-export default ConnectedSearchBox
+export default SearchBox

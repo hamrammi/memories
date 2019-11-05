@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DirectoryTree from "../DirectoryTree/DirectoryTree";
 import DirectoryContext from "../../contexts/DirectoryContext";
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
@@ -20,12 +20,13 @@ const GQL_createMemory = gql`
   }
 `
 
-
-
-function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNotifier }) {
+function AddMemory () {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [errors, setErrors] = useState([])
+
+  const dispatch = useDispatch()
+  const selectedDirectoryId = useSelector(state => state.directories.AddMemory__activeId)
 
   function onError (gqlError) {
     setErrors(transformGQLError(gqlError))
@@ -41,10 +42,10 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
     } catch (e) {}
     setTitle('')
     setDescription('')
-    selectDirectory('')
+    dispatch(selectDirectory('', 'AddMemory'))
     setErrors([])
-    showNotifier('success', 'Memory saved!')
-    setTimeout(hideNotifier, 2000)
+    dispatch(showNotifier('success', 'Memory saved!'))
+    setTimeout(() => dispatch(hideNotifier()), 2000)
   }
 
   return (
@@ -89,18 +90,4 @@ function AddMemory ({ selectedDirectoryId, selectDirectory, showNotifier, hideNo
   )
 }
 
-function mapStateToProps (state) {
-  return {
-    selectedDirectoryId: state.directories.AddMemory__activeId
-  }
-}
-
-const mapDispatchToProps = {
-  selectDirectory: (id) => selectDirectory(id, 'AddMemory'),
-  showNotifier: showNotifier,
-  hideNotifier: hideNotifier
-}
-
-const ConnectedAddMemory = connect(mapStateToProps, mapDispatchToProps)(AddMemory)
-
-export default ConnectedAddMemory
+export default AddMemory

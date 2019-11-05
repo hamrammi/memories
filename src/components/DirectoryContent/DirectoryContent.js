@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import Fetching from '../shared/Fetching'
@@ -16,7 +16,8 @@ export const GQL_memories = gql`
   }
 `
 
-function DirectoryContent ({ directoryId }) {
+function DirectoryContent () {
+  const directoryId = useSelector(state => state.directories.SearchMemories__activeId)
   return (
     <>
       <Query query={GQL_memories} variables={{ directoryId }}>
@@ -47,11 +48,4 @@ function DirectoryContent ({ directoryId }) {
 
 
 
-function mapStateToProps (state) {
-  return {
-    directoryId: state.directories.SearchMemories__activeId
-  }
-}
-
-const ConnectedDirectoryContent = connect(mapStateToProps)(DirectoryContent)
-export default ConnectedDirectoryContent
+export default DirectoryContent

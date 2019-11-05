@@ -46,7 +46,7 @@ export default DirectoryTree
 
 function makeTree (nodes) {
   const findNodesByParentNodeId = parentNodeId =>
-    nodes.filter(node => node.parentId === parentNodeId)//.map(x => x.id)
+    nodes.filter(node => node.parentId === parentNodeId)
 
   function addSubNodes (parentNode, tree) {
     let nodes = findNodesByParentNodeId(parentNode.id)
