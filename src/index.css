@@ -14,7 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fafafa;
+  background-color: #EDF1F3;
 }
 
 code {
@@ -49,4 +49,8 @@ code {
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
   border-radius: .3rem!important;
   background-color: #fff!important;
+}
+
+a, a:hover {
+  color: var(--main-color)
 }

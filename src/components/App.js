@@ -4,6 +4,7 @@ import SearchMemories from "./SearchMemories/SearchMemories";
 import AddMemory from "./AddMemory/AddMemory";
 import SearchBox from "./SearchBox/SearchBox";
 import AddDirectory from './AddDirectory/AddDirectory'
+import MemoryView from "./MemoryView/MemoryView";
 
 function App () {
   return (
@@ -15,7 +16,8 @@ function App () {
             <Switch>
               <Route exact path={'/'} component={SearchMemories} />
               <Route exact path={'/add'} component={AddMemory} />
-              <Route exact path={'/add-directory'} component={AddDirectory} />>
+              <Route exact path={'/add-directory'} component={AddDirectory} />
+              <Route path={'/m/:id'} component={MemoryView} />
             </Switch>
           </div>
         </div>

@@ -27,7 +27,7 @@ function SearchBox () {
         <div className={alertClasses} style={alertStyles}><strong>{notifiers.error}</strong></div>
       ) }
 
-      <nav className="navbar fixed-top navbar-light shadow-sm" style={{ backgroundColor: '#00c7ac' }}>
+      <nav className="navbar fixed-top navbar-light shadow-sm" style={{ backgroundColor: '#37596D' }}>
         <div className="container px-0 px-lg-3">
           <div className="d-flex justify-content-between w-100">
             <div className="text-white d-flex align-items-center SearchBox__title">

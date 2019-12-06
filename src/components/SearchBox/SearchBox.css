@@ -1,7 +1,7 @@
 .SearchBox__input {
-  background-color: darkcyan;
+  background-color: #597b8f;
   color: white;
-  border-color: darkcyan;
+  border-color: #597b8f;
 }
 
 .SearchBox__input::placeholder {

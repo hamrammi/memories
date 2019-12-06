@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import Fetching from '../shared/Fetching'
 import ErrorAlert from '../shared/ErrorAlert'
+import { Link } from 'react-router-dom'
 
 export const GQL_memories = gql`
   query ($directoryId: ID!) {
@@ -31,7 +32,9 @@ function DirectoryContent () {
             items.map((x) => {
               return (
                 <div className="panel-default mb-2 pb-2 pt-3 px-3" key={x.id}>
-                  <h5 className="text-main"><strong>{x.title}</strong></h5>
+                  <Link to={`/m/${x.id}`}>
+                    <h5 className="text-main"><strong>{x.title}</strong></h5>
+                  </Link>
                   <div className="mb-2">{ x.description }</div>
                   <div className="text-muted">
                     #super #coolstuff
