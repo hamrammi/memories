@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Directory from "../Directory/Directory"
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import ErrorAlert from '../shared/ErrorAlert'
 import Fetching from '../shared/Fetching'
+import DirectoryContext from "../../contexts/DirectoryContext";
 
 export const GQL_directories = gql`
   query {
@@ -17,10 +18,18 @@ export const GQL_directories = gql`
 `
 
 function DirectoryTree () {
+  const context = useContext(DirectoryContext)
+  console.log(context);
+
   return (
     <div className="mb-4">
       <div className="mb-3">
-        <h5 className="card-title"><strong>Choose a folder</strong></h5>
+        <h5 className="card-title mb-4">
+          <strong>{context === 'SearchMemories'
+            ? null
+            : <span className="text-black-50 mr-2">Step 1:</span>
+          }Choose a folder</strong>
+        </h5>
         <Query query={GQL_directories}>
           {({ loading, error, data }) => {
             if (loading) return <Fetching/>

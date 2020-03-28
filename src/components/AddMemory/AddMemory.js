@@ -49,20 +49,27 @@ function AddMemory () {
   }
 
   return (
-    <div className="row">
+    <div className="row mt-4">
       <div className="col-12">
-        <h4 className="mb-4 eyes-friendly">
-          <Link to={''}><i className="fas fa-chevron-left mr-3 text-main"/></Link>
-          <strong>New memory</strong>
-        </h4>
+        <div className="mb-4 d-flex align-items-center">
+          <Link to={''}>
+            <button className="btn btn-secondary">
+              <i className="fas fa-arrow-left mr-2"/>Back
+            </button>
+          </Link>
+          <h5 className="mb-0 ml-4 text-uppercase"><strong>New memory</strong></h5>
+        </div>
+        <hr className="mb-4"/>
       </div>
       <div className="col-12 col-lg-4">
-        <DirectoryContext.Provider value={'AddMemory'}>
+        <DirectoryContext.Provider value="AddMemory">
           <DirectoryTree/>
         </DirectoryContext.Provider>
       </div>
       <div className="col-12 col-lg-8">
-        <h5 className="card-title"><strong>Memory bio</strong></h5>
+        <h5 className="card-title mb-4">
+          <strong><span className="text-secondary mr-2">Step 2:</span>Memory BIO</strong>
+        </h5>
         <GQLErrors errors={errors}/>
         <div className="panel-default p-3">
           <div className="AddMemory__step">
