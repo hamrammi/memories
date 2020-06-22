@@ -28,7 +28,7 @@ export default function NavBar () {
       ) }
 
       <nav className="navbar fixed-top navbar-light shadow-sm NavBar">
-        <div className="container px-0 px-lg-3">
+        <div className="container-fluid px-0 px-lg-3">
           <div className="d-flex justify-content-between w-100">
             <div className="d-flex align-items-center NavBar__AppLogo">
               <i className="fab fa-markdown"/>

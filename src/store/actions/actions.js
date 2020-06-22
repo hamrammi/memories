@@ -1,3 +1,6 @@
+
+// ~~~~ FOLDER ~~~~
+
 export const TOGGLE_SUBDIRECTORIES = 'TOGGLE_SUBDIRECTORIES'
 export const SELECT_DIRECTORY = 'SELECT_DIRECTORY'
 
@@ -16,6 +19,17 @@ export function selectDirectory (directoryId, component) {
     meta: { component }
   }
 }
+
+// ~~~~ MEMORY ~~~~
+
+export const SELECT_MEMORY = 'SELECT_MEMORY'
+
+export const selectMemory = (memoryId) => ({
+  type: SELECT_MEMORY,
+  payload: { memoryId }
+})
+
+// ~~~~ NOTIFIER ~~~~
 
 export const SHOW_NOTIFIER = 'SHOW_NOTIFIER'
 export const HIDE_NOTIFIER = 'HIDE_NOTIFIER'

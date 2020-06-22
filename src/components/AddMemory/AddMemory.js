@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import DirectoryTree from "../DirectoryTree/DirectoryTree";
+import FolderTree from "../FolderTree/FolderTree";
 import DirectoryContext from "../../contexts/DirectoryContext";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { hideNotifier, selectDirectory, showNotifier } from "../../store/actions/actions";
-import { GQL_memories } from '../DirectoryContent/DirectoryContent'
+import { GQL_memories } from '../MemoryList/MemoryList'
 import { GQLErrors, transformGQLError } from '../shared/GQLErrors'
+import { useMutation } from "@apollo/client";
 
 const GQL_createMemory = gql`
   mutation CreateMemory($title: String!, $description: String, $directoryId: ID!) {
-    createMemory(title: $title, description: $description, directoryId: $directoryId) {
+    createMemory(title: $title, description: $description, directory_id: $directoryId) {
       id
       title
       description
-      directoryId
+      directory_id
     }
   }
 `
@@ -48,6 +48,11 @@ function AddMemory () {
     setTimeout(() => dispatch(hideNotifier()), 2000)
   }
 
+  const addMemoryMutation = useMutation(GQL_createMemory, {
+    update: onUpdate,
+    onError
+  })
+
   return (
     <div className="row mt-4">
       <div className="col-12">
@@ -63,7 +68,7 @@ function AddMemory () {
       </div>
       <div className="col-12 col-lg-4">
         <DirectoryContext.Provider value="AddMemory">
-          <DirectoryTree/>
+          <FolderTree/>
         </DirectoryContext.Provider>
       </div>
       <div className="col-12 col-lg-8">
@@ -82,15 +87,11 @@ function AddMemory () {
             <textarea className="form-control border" rows="4"
                       onChange={e => setDescription(e.target.value)} value={description}/>
           </div>
-          <Mutation mutation={GQL_createMemory}
-                    variables={{ title, description, directoryId: selectedDirectoryId }}
-                    onError={onError}
-                    update={onUpdate}>
-            {createMemoryMutation =>
-              <button onClick={createMemoryMutation}
-                      className="btn btn-main shadow-sm rounded-lg">Save memory</button>
-            }
-          </Mutation>
+          <button onClick={(e) => {
+            e.preventDefault()
+            addMemoryMutation({ variables: { title, description, directoryId: selectedDirectoryId } })
+          }}
+                  className="btn btn-main shadow-sm rounded-lg">Save memory</button>
         </div>
       </div>
     </div>

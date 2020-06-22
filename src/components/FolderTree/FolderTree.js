@@ -1,61 +1,64 @@
-import React, {useContext} from 'react'
-import Directory from "../Directory/Directory"
+import React, { useContext } from 'react'
+import Folder from "./Folder"
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import ErrorAlert from '../shared/ErrorAlert'
 import Fetching from '../shared/Fetching'
 import DirectoryContext from "../../contexts/DirectoryContext";
+import { useQuery } from "@apollo/client"
+import './FolderTree.sass'
 
 export const GQL_directories = gql`
   query {
     directories {
       id
       name
-      parentId
+      parent_id
     }
   }
 `
 
-function DirectoryTree () {
+function FolderTree () {
   const context = useContext(DirectoryContext)
-  console.log(context);
+  const { loading, error, data } = useQuery(GQL_directories)
+  if (loading) return (
+    <div className="col-12 col-xl-3 FolderTree py-4">
+      <Fetching/>
+    </div>
+  )
+  if (error) return (
+    <div className="col-12 col-xl-3 FolderTree py-4">
+      <ErrorAlert message={error.message}/>
+    </div>
+  )
+  const tree = makeTree(data.directories)
 
   return (
-    <div className="mb-4">
-      <div className="mb-3">
-        <h5 className="card-title mb-4">
+    <div className="col-12 col-xl-3 FolderTree">
+      <div className="my-4">
+        <h5 className="mb-4 text-center text-white-50">
           <strong>{context === 'SearchMemories'
             ? null
-            : <span className="text-black-50 mr-2">Step 1:</span>
-          }Choose a folder</strong>
+            : <span className="mr-2">Step 1:</span>
+          }Folders</strong>
         </h5>
-        <Query query={GQL_directories}>
-          {({ loading, error, data }) => {
-            if (loading) return <Fetching/>
-            if (error) return <ErrorAlert message={error.message}/>
-            const tree = makeTree(data.directories)
-            return (
-              <div>
-                {Object.keys(tree)
-                  .map(nodeId => <Directory key={nodeId} directory={tree[nodeId]} />)}
-              </div>
-            )
-          }}
-        </Query>
+        <div>
+          {Object.keys(tree)
+              .map(nodeId => <Folder key={nodeId} directory={tree[nodeId]} />)}
+        </div>
       </div>
       <div className="text-center">
-        <Link to={'add-directory'} className="text-main">New directory</Link>
+        <Link to={'add-folder'} className="btn btn-secondary">New Folder</Link>
       </div>
     </div>
   )
 }
 
-export default DirectoryTree
+export default FolderTree
 
 function makeTree (nodes) {
   const findNodesByParentNodeId = parentNodeId =>
-    nodes.filter(node => node.parentId === parentNodeId)
+    nodes.filter(node => node.parent_id === parentNodeId)
 
   function addSubNodes (parentNode, tree) {
     let nodes = findNodesByParentNodeId(parentNode.id)

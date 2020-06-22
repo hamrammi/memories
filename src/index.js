@@ -5,16 +5,13 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './store/store'
-import { ApolloProvider } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloClient, InMemoryCache, HttpLink, ApolloProvider } from '@apollo/client'
 import { BrowserRouter } from 'react-router-dom'
 
 const apolloClient = new ApolloClient({
-  link: createHttpLink({
-    // uri: 'http://localhost:4000'
-    uri: 'https://netherenth.xyz/apps/memories/graphql'
+  link: new HttpLink({
+    uri: 'http://localhost:4000'
+    // uri: 'https://netherenth.xyz/apps/memories/graphql'
   }),
   cache: new InMemoryCache()
 })

@@ -14,7 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #EDF1F3;
+  background-color: #1b2135;
 }
 
 code {
@@ -38,10 +38,6 @@ code {
 
 .alert-danger {
   border-width: 4px;
-}
-
-.border-default {
-  border: 1px solid #eee;
 }
 
 .panel-default {

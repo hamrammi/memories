@@ -8,22 +8,32 @@ schema {
 type Directory {
   id: ID!
   name: String!
-  parentId: ID
+  parent_id: ID
 }
 
 type Memory {
   description: String
-  directoryId: ID!
+  directory_id: ID!
   id: ID!
   title: String!
 }
 
 type Mutation {
-  createDirectory(name: String!, parentId: ID): Directory
-  createMemory(description: String, directoryId: ID!, title: String!): Memory
+  createDirectory(name: String!, parent_id: ID): Directory
+  createMemory(description: String, directory_id: ID!, title: String!): Memory
 }
 
 type Query {
   directories: [Directory!]
-  memories(directoryId: ID!): [Memory!]
+  memories(directory_id: ID!): [Memory!]
+  memory(memory_id: ID!): Memory!
 }
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
+}
+
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
